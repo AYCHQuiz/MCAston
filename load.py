@@ -72,17 +72,10 @@ for i in range(len(sorted_pngs)):
                    filename +
                    '" https://api.imgur.com/3/upload')
     print file_loader
-    success = False
-    while not success:
-        try:
-            with_id = subprocess.check_output(file_loader, shell=True)
-            id_dict = json.loads(with_id)
-            id = str(id_dict[u'data'][u'id'])
-            output_lines.append([year,admin,grade,id,key[i]])
-            success = True
-        except:
-            print "WEIRD FAILURE!"
-            pass
+    with_id = subprocess.check_output(file_loader, shell=True)
+    id_dict = json.loads(with_id)
+    id = str(id_dict[u'data'][u'id'])
+    output_lines.append([year,admin,grade,id,key[i]])
 
 out_path = os.path.join(dirname,"record.txt")
 outfile = open(out_path,'w')
