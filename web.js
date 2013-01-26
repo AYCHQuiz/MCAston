@@ -17,7 +17,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 var app = express.createServer(express.logger());
 
 app.get('/', function(request, response) {
-	response.send('Hello Heroku!\n');
+	response.send('Hello World!\n');
     });
 
 var port = process.env.PORT || 5000;
