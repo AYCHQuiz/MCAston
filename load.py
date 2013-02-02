@@ -9,6 +9,8 @@ import csv
 # "constants"
 client_id = "e0fdb2264d15d2a"
 client_secret = "e07c8659762da7a8ec2f3fcda9083499bd97f14a"
+#client_id = "b6e3d408212d828"
+#client_secret = "2a38dd8e341be9b5a785d420ef9cefc2c4700a71"
 # not terribly secret here, is it...
 
 dirname = sys.argv[1]
@@ -61,7 +63,7 @@ token_getter = ('curl -X POST -F "client_id=' +
                 '" https://api.imgur.com/oauth2/token')
 with_token = subprocess.check_output(token_getter, shell=True)
 token_dict = json.loads(with_token)
-token = str(token_dict[u'access_token'])
+token = str(token_dict[u'data'][u'access_token'])
 
 output_lines = list()
 for i in range(len(sorted_pngs)):
