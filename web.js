@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express.createServer(express.logger());
+var app = express();
 
 var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
 var collections = ['mcas'];

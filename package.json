@@ -1,8 +1,8 @@
 {
   "name": "mcaston",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
-    "express": "2.5.x",
+    "express": "3.x",
     "mongojs": "0.5.1"
   },
   "engines": {
