@@ -6,7 +6,8 @@ var collections = ['mcas'];
 var db = require('mongojs').connect(mongoURI, collections);
 
 app.get('/', function(request, response) {
-  db.mcas.find().limit(1, function(err, doc) {
+  n = Math.floor(Math.random()*1236)
+  db.mcas.find().skip(n).limit(1, function(err, doc) {
     response.send(doc);
   });
 });
