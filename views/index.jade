@@ -2,19 +2,24 @@ doctype 5
 html(lang = 'en')
   head
     title MCASta.net
+    script(src = 'http://code.jquery.com/jquery-1.9.1.min.js')
   body
     center
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
       .buttons
-        button A
-        button B
-        button C
-        button D
+        button(value = 'A') A
+        button(value = 'B') B
+        button(value = 'C') C
+        button(value = 'D') D
       p Questions courtesy of the Massachusetts Department of Elementary and Secondary Education
 
+    script
+      $("button").click(function(){
+        $("body").append("<p>"+this.value+"</p>");
+      })
 
-    script (type = 'text/javascript')
+    script(type = 'text/javascript')
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-38333907-1']);
       _gaq.push(['_trackPageview']);
