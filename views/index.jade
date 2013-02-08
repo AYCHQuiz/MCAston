@@ -17,7 +17,9 @@ html(lang = 'en')
 
     script
       $("button").click(function(){
-        $("body").append("<p>"+this.value+"</p>");
+        $.post("/", {answer: this.value}, function(data){
+          alert(data);
+        });
       })
 
     script(type = 'text/javascript')

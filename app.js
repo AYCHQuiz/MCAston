@@ -29,6 +29,10 @@ app.get('/', function(request, response){
   };
 });
 
+app.post('/', function(request, response){
+  response.send('blah!');
+});
+
 app.get('*', function(request, response){
   response.status(404);
   response.send('What is the sound of one hand clapping?');
