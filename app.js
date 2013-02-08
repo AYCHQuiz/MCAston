@@ -16,12 +16,17 @@ app.configure(function(){
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
 
 app.get('/', function(request, response){
-  n = Math.floor(Math.random()*1236);
-  db.mcas.find().skip(n).limit(1, function(err, docs){
-    request.session.imgur = docs[0].imgur;
-    console.log(request.session);
-    response.render('index', {imgur: docs[0].imgur});
-  });
+  if (request.session.imgur){
+    response.render('index', {imgur: request.session.imgur});
+  } else {
+    n = Math.floor(Math.random()*1236);
+    db.mcas.find().skip(n).limit(1, function(err, docs){
+      var imgur = docs[0].imgur;
+      request.session.imgur = imgur;
+      console.log(request.session);
+      response.render('index', {imgur: imgur});
+    });
+  };
 });
 
 app.get('*', function(request, response){
