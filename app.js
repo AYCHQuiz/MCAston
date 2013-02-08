@@ -20,6 +20,11 @@ app.get('/', function(request, response){
   });
 });
 
+app.get('*', function(request, response){
+  response.status(404);
+  response.send('What is the sound of one hand clapping?');
+});
+
 app.listen(app.get('port'), function(){
   console.log("Listening on " + app.get('port'));
 });
