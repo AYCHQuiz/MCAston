@@ -5,12 +5,13 @@ var app = express();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.set('secret', process.env.MONGOLAB_URI || 'mongodb://localhost/test');
+  app.set('collections', ['mcas']);
   app.use(express.static(__dirname + '/public'));
 });
 
-var mongo_url = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
-var collections = ['mcas'];
-var db = require('mongojs').connect(mongo_url, collections);
+//var collections = ['mcas'];
+var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
 
 app.get('/', function(request, response){
   n = Math.floor(Math.random()*1236);
