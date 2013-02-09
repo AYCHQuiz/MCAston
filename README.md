@@ -3,4 +3,4 @@
 To load MCAS question data into the mongo datastore:
 
     mongod --fork
-    mongoimport -c mcas --file data.txt --type csv --headerline
+    mongoimport -c mcas --file data.csv --type csv --headerline
