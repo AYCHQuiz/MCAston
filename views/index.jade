@@ -9,18 +9,22 @@ html(lang = 'en')
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
       .buttons
-        button(value = 'A') A
-        button(value = 'B') B
-        button(value = 'C') C
-        button(value = 'D') D
+        button#A(value = 'A') A
+        button#B(value = 'B') B
+        button#C(value = 'C') C
+        button#D(value = 'D') D
       p Questions courtesy of the Massachusetts Department of Elementary and Secondary Education
 
     script
       $("button").click(function(){
         $.post("/", {answer: this.value}, function(data){
-          alert(data);
+          $('button#'+data.correctAnswer).css('color', "green");
+          if (data.correctAnswer != data.userAnswer){
+            $('button#'+data.userAnswer).css('color', "red");
+          };
+          //alert(JSON.stringify(data));
         });
-      })
+      });
 
     script(type = 'text/javascript')
       var _gaq = _gaq || [];

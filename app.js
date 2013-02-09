@@ -24,7 +24,6 @@ app.get('/', function(request, response){
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
       request.session.imgur = imgur;
-      console.log(request.session);
       response.render('index', {imgur: imgur});
     });
   };
@@ -32,7 +31,14 @@ app.get('/', function(request, response){
 
 app.post('/', function(request, response){
   db.mcas.find({imgur: request.session.imgur}, function(err, docs){
-    response.send(request.body.answer);
+    userAnswer = request.body.answer;
+    correctAnswer = docs[0].answer;
+    n = Math.floor(Math.random()*1236);
+    db.mcas.find().skip(n).limit(1, function(err, docs){
+      response.send({userAnswer: userAnswer,
+                     correctAnswer: correctAnswer,
+                     nextImgur: docs[0].imgur});
+    });
   });
 });
 
