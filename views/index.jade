@@ -5,7 +5,7 @@ html(lang = 'en')
     link(rel = 'stylesheet', type = 'text/css', href='style.css')
     script(src = 'http://code.jquery.com/jquery-1.9.1.min.js')
   body
-    #content
+    #questions
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
       .buttons
@@ -13,12 +13,14 @@ html(lang = 'en')
         button#B(value = 'B') B
         button#C(value = 'C') C
         button#D(value = 'D') D
+    #footer
       p Questions courtesy of the Massachusetts Department of Elementary and Secondary Education
 
     script
       $("button").click(function(){
+        $("button").attr('disabled', true);
         $.post("/", {answer: this.value}, function(data){
-          $('button#'+data.correctAnswer).css('color', "green");
+          $('button#'+data.correctAnswer).css('background', "green");
           if (data.correctAnswer != data.userAnswer){
             $('button#'+data.userAnswer).css('color', "red");
           };
