@@ -9,24 +9,27 @@ html(lang = 'en')
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
       .buttons
-        button#A(value = 'A') A
-        button#B(value = 'B') B
-        button#C(value = 'C') C
-        button#D(value = 'D') D
+        button.A(value = 'A') A
+        button.B(value = 'B') B
+        button.C(value = 'C') C
+        button.D(value = 'D') D
     #footer
       p Questions courtesy of the Massachusetts Department of Elementary and Secondary Education
 
     script
-      $("button").click(function(){
+      function answerQuestion(){
         $("button").attr('disabled', true);
         $.post("/", {answer: this.value}, function(data){
-          $('button#'+data.correctAnswer).css('background', "green");
+          $('button.'+data.correctAnswer).css('background', "green");
           if (data.correctAnswer != data.userAnswer){
-            $('button#'+data.userAnswer).css('color', "red");
+            $('button.'+data.userAnswer).css('color', "red");
           };
-          //alert(JSON.stringify(data));
+          $("button").removeClass();
+          $("#questions").append('<div class="question"><img src="http://i.imgur.com/'+data.nextImgur+'.png"></div><div class="buttons"><button class="A" value="A">A</button><button class="B" value="B">B</button><button class="C" value="C">C</button><button class="D" value="D">D</button></div>');
+          $("button").click(answerQuestion);
         });
-      });
+      }
+      $("button").click(answerQuestion);
 
     script(type = 'text/javascript')
       var _gaq = _gaq || [];

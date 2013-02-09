@@ -35,9 +35,11 @@ app.post('/', function(request, response){
     correctAnswer = docs[0].answer;
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
+      var imgur = docs[0].imgur;
+      request.session.imgur = imgur;
       response.send({userAnswer: userAnswer,
                      correctAnswer: correctAnswer,
-                     nextImgur: docs[0].imgur});
+                     nextImgur: imgur});
     });
   });
 });
