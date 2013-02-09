@@ -8,6 +8,7 @@ app.configure(function(){
   app.set('port', process.env.PORT || 5000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.use(express.bodyParser());
   app.use(express.cookieParser(app.get('secret')));
   app.use(express.session());
   app.use(express.static(__dirname + '/public'));
@@ -30,7 +31,9 @@ app.get('/', function(request, response){
 });
 
 app.post('/', function(request, response){
-  response.send('blah!');
+  db.mcas.find({imgur: request.session.imgur}, function(err, docs){
+    response.send(request.body.answer);
+  });
 });
 
 app.get('*', function(request, response){
