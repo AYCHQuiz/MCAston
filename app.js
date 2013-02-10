@@ -25,6 +25,10 @@ function do404(request, response, next){
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
 
 app.get('/', function(request, response){
+  if (!request.session.attempts){
+    request.session.attempts = [0,0,0,0,0,0,0,0,0,0,0];
+    request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
+  };
   if (request.session.imgur){
     response.render('index', {imgur: request.session.imgur});
   } else {
@@ -52,14 +56,27 @@ app.get('/do/:id', function(request, response, next){
 app.post('/', function(request, response){
   db.mcas.find({imgur: request.session.imgur}, function(err, docs){
     userAnswer = request.body.answer;
-    correctAnswer = docs[0].answer;
+    oldQuestion = docs[0];
+    correctAnswer = oldQuestion.answer;
+    oldGrade = oldQuestion.grade;
+    request.session.attempts[oldGrade]+=1;
+    if (userAnswer == correctAnswer){
+      request.session.corrects[oldGrade]+=1;
+    };
+    oldYear = oldQuestion.year;
+    oldID = oldQuestion.id;
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
       request.session.imgur = imgur;
       response.send({userAnswer: userAnswer,
                      correctAnswer: correctAnswer,
-                     nextImgur: imgur});
+                     nextImgur: imgur,
+                     oldGrade: oldGrade,
+                     oldYear: oldYear,
+                     oldID: oldID,
+                     attempts: request.session.attempts,
+                     corrects: request.session.corrects});
     });
   });
 });
