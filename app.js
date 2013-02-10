@@ -12,7 +12,12 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser(app.get('secret')));
   app.use(express.session());
+  app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(function(request, response, next){
+    response.status(404);
+    response.send('What is the sound of one hand clapping?');
+  });
 });
 
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
@@ -51,11 +56,6 @@ app.post('/', function(request, response){
                      nextImgur: imgur});
     });
   });
-});
-
-app.all('*', function(request, response){
-  response.status(404);
-  response.send('What is the sound of one hand clapping?');
 });
 
 app.listen(app.get('port'), function(){
