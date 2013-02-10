@@ -14,11 +14,13 @@ app.configure(function(){
   app.use(express.session());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-  app.use(function(request, response, next){
+  app.use(do404);
+});
+
+function do404(request, response, next){
     response.status(404);
     response.send('What is the sound of one hand clapping?');
-  });
-});
+  }
 
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
 
@@ -35,11 +37,15 @@ app.get('/', function(request, response){
   };
 });
 
-app.get('/do/:id', function(request, response){
+app.get('/do/:id', function(request, response, next){
   db.mcas.find({id: parseInt(request.params.id)}, function(err, docs){
-    var imgur = docs[0].imgur;
-    request.session.imgur = imgur;
-    response.render('index', {imgur: imgur});
+    if (docs.length == 0){
+      do404(request, response);
+    } else {
+      var imgur = docs[0].imgur;
+      request.session.imgur = imgur;
+      response.render('index', {imgur: imgur});
+    };
   });
 });
 
