@@ -30,6 +30,15 @@ app.get('/', function(request, response){
   };
 });
 
+app.get('/do/:id', function(request, response){
+  db.mcas.find({id: parseInt(request.params.id)}, function(err, docs){
+    var imgur = docs[0].imgur;
+    request.session.imgur = imgur;
+    //response.send(imgur);
+    response.render('index', {imgur: imgur});
+  });
+});
+
 app.post('/', function(request, response){
   db.mcas.find({imgur: request.session.imgur}, function(err, docs){
     userAnswer = request.body.answer;
@@ -52,4 +61,5 @@ app.get('*', function(request, response){
 
 app.listen(app.get('port'), function(){
   console.log("Listening on " + app.get('port'));
+  //console.log(app.routes);
 });
