@@ -48,7 +48,7 @@ app.get('/do/:id', function(request, response, next){
     } else {
       var imgur = docs[0].imgur;
       request.session.imgur = imgur;
-      response.render('index', {imgur: imgur});
+      response.render('single', {imgur: imgur});
     };
   });
 });
