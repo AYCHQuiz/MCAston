@@ -34,7 +34,6 @@ app.get('/do/:id', function(request, response){
   db.mcas.find({id: parseInt(request.params.id)}, function(err, docs){
     var imgur = docs[0].imgur;
     request.session.imgur = imgur;
-    //response.send(imgur);
     response.render('index', {imgur: imgur});
   });
 });
@@ -54,12 +53,11 @@ app.post('/', function(request, response){
   });
 });
 
-app.get('*', function(request, response){
+app.all('*', function(request, response){
   response.status(404);
   response.send('What is the sound of one hand clapping?');
 });
 
 app.listen(app.get('port'), function(){
   console.log("Listening on " + app.get('port'));
-  //console.log(app.routes);
 });
