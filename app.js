@@ -54,6 +54,10 @@ app.get('/do/:id', function(request, response, next){
 });
 
 app.post('/', function(request, response){
+  if (!request.session.attempts){
+    request.session.attempts = [0,0,0,0,0,0,0,0,0,0,0];
+    request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
+  };
   db.mcas.find({imgur: request.session.imgur}, function(err, docs){
     userAnswer = request.body.answer;
     oldQuestion = docs[0];
