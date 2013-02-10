@@ -8,6 +8,7 @@ app.configure(function(){
   app.set('port', process.env.PORT || 5000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.use(express.limit('1kb'));
   app.use(express.bodyParser());
   app.use(express.cookieParser(app.get('secret')));
   app.use(express.session());
