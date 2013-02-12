@@ -47,7 +47,6 @@ app.get('/do/:id', function(request, response, next){
       do404(request, response);
     } else {
       var imgur = docs[0].imgur;
-      request.session.imgur = imgur;
       response.render('single', {imgur: imgur});
     };
   });
@@ -58,13 +57,20 @@ app.post('/', function(request, response){
     request.session.attempts = [0,0,0,0,0,0,0,0,0,0,0];
     request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
   };
-  db.mcas.find({imgur: request.session.imgur}, function(err, docs){
+  if (request.body.imgur){
+    imgurToCheck = request.body.imgur;
+    scoreIt = false;
+  } else {
+    imgurToCheck = request.session.imgur;
+    scoreIt = true;
+  };
+  db.mcas.find({imgur: imgurToCheck}, function(err, docs){
     userAnswer = request.body.answer;
     oldQuestion = docs[0];
     correctAnswer = oldQuestion.answer;
     oldGrade = oldQuestion.grade;
     request.session.attempts[oldGrade]+=1;
-    if (userAnswer == correctAnswer){
+    if (scoreIt && userAnswer == correctAnswer){
       request.session.corrects[oldGrade]+=1;
     };
     oldYear = oldQuestion.year;
@@ -72,7 +78,9 @@ app.post('/', function(request, response){
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
-      request.session.imgur = imgur;
+      if (scoreIt) {
+        request.session.imgur = imgur;
+      };
       response.send({userAnswer: userAnswer,
                      correctAnswer: correctAnswer,
                      nextImgur: imgur,
