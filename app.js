@@ -1,4 +1,5 @@
 var express = require('express');
+var SessionStore = require('connect-mongo')(express);
 
 var app = express();
 
@@ -11,7 +12,7 @@ app.configure(function(){
   app.use(express.limit('1kb'));
   app.use(express.bodyParser());
   app.use(express.cookieParser(app.get('secret')));
-  app.use(express.session());
+  app.use(express.session({store: new SessionStore({url: app.get('secret')})}));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
   app.use(do404);
