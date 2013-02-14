@@ -17,9 +17,11 @@ html(lang = 'en')
       p Questions courtesy of the Massachusetts Department of Elementary and Secondary Education
 
     script
+      var localImgur = '#{imgur}';
       function answerQuestion(){
         $("button").attr('disabled', true);
-        $.post("/", {answer: this.value}, function(data){
+        $.post("/", {answer: this.value, imgur: localImgur}, function(data){
+          localImgur = data.nextImgur;
           $('button.'+data.correctAnswer).css('background', "green");
           if (data.correctAnswer != data.userAnswer){
             $('button.'+data.userAnswer).css('color', "red");

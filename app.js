@@ -58,7 +58,7 @@ app.post('/', function(request, response){
     request.session.attempts = [0,0,0,0,0,0,0,0,0,0,0];
     request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
   };
-  if (request.body.imgur){
+  if (request.body.imgur != request.session.imgur){
     imgurToCheck = request.body.imgur;
     scoreIt = false;
   } else {
