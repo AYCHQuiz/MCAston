@@ -5,7 +5,7 @@ var app = express();
 
 app.configure(function(){
   app.set('secret', process.env.MONGOLAB_URI || 'mongodb://localhost/test');
-  app.set('collections', ['mcas']);
+  app.set('collections', ['mcas', 'displays', 'answers']);
   app.set('port', process.env.PORT || 5000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -31,12 +31,14 @@ app.get('/', function(request, response){
     request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
   };
   if (request.session.imgur){
+    db.displays.insert({when: new Date(), imgur: request.session.imgur, scored: true});
     response.render('index', {imgur: request.session.imgur});
   } else {
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
       request.session.imgur = imgur;
+      db.displays.insert({when: new Date(), imgur: imgur, scored: true});
       response.render('index', {imgur: imgur});
     });
   };
@@ -48,6 +50,7 @@ app.get('/do/:id', function(request, response, next){
       do404(request, response);
     } else {
       var imgur = docs[0].imgur;
+      db.displays.insert({when: new Date(), imgur: imgur, scored: false});
       response.render('single', {imgur: imgur});
     };
   });
@@ -68,6 +71,8 @@ app.post('/', function(request, response){
   db.mcas.find({imgur: imgurToCheck}, function(err, docs){
     userAnswer = request.body.answer;
     oldQuestion = docs[0];
+    db.answers.insert({when: new Date(), imgur: oldQuestion.imgur,
+                       scored: scoreIt, answer: userAnswer});
     correctAnswer = oldQuestion.answer;
     oldGrade = oldQuestion.grade;
     request.session.attempts[oldGrade]+=1;
@@ -81,6 +86,7 @@ app.post('/', function(request, response){
       var imgur = docs[0].imgur;
       if (scoreIt) {
         request.session.imgur = imgur;
+        db.displays.insert({when: new Date(), imgur: imgur, scored: true});
       };
       response.send({userAnswer: userAnswer,
                      correctAnswer: correctAnswer,
