@@ -24,7 +24,7 @@ header {
   box-shadow: 0px 0px 4px 4px #7ACC52;
 }
 
-div.summary {
+div.summary, footer {
 	padding: 8px;
   background-color: #7ACC52;
   -webkit-box-shadow: 0px 0px 4px 4px #7ACC52;
@@ -32,6 +32,11 @@ div.summary {
   color: #335622;
 	text-shadow: 1px 1px 1px #47B224;
 	font-size: 20px;
+}
+
+footer {
+	font-size: 12px;
+	text-align: center;
 }
 
 div#theM {
