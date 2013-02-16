@@ -9,10 +9,10 @@ html(lang = 'en')
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
       .buttons
-        button.A(value = 'A') A
-        button.B(value = 'B') B
-        button.C(value = 'C') C
-        button.D(value = 'D') D
+        button.A(value = 'A') ○ A
+        button.B(value = 'B') ○ B
+        button.C(value = 'C') ○ C
+        button.D(value = 'D') ○ D
     #footer
       p Question courtesy of the Massachusetts Department of Elementary and Secondary Education
 
@@ -20,11 +20,11 @@ html(lang = 'en')
       function answerQuestion(){
         $("button").attr('disabled', true);
         $.post("/", {answer: this.value, imgur: '#{imgur}'}, function(data){
-          $('button.'+data.correctAnswer).css('background', "green");
+          $('button.'+data.correctAnswer).addClass('correct');
           if (data.correctAnswer != data.userAnswer){
-            $('button.'+data.userAnswer).css('color', "red");
+            $('button.'+data.userAnswer).addClass('incorrect');
           };
-          $("button").removeClass();
+          $("button").removeClass('A B C D');
           $("#questions").append('<div>That was a grade '+data.oldGrade+' question from '+data.oldYear+'.</div>');
         });
       }
