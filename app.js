@@ -74,7 +74,6 @@ app.post('/', function(request, response){
   db.mcas.find({imgur: imgurToCheck}, function(err, docs){
     userAnswer = request.body.answer;
     oldQuestion = docs[0];
-    console.log(request.session);
     correctAnswer = oldQuestion.answer;
     oldGrade = oldQuestion.grade;
     db.answers.insert({when: new Date(),
