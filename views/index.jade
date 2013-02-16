@@ -22,9 +22,9 @@ html(lang = 'en')
         $("button").attr('disabled', true);
         $.post("/", {answer: this.value, imgur: localImgur}, function(data){
           localImgur = data.nextImgur;
-          $('button.'+data.correctAnswer).css('color', "green");
+          $('button.'+data.correctAnswer).addClass('correct');
           if (data.correctAnswer != data.userAnswer){
-            $('button.'+data.userAnswer).css('color', "red");
+            $('button.'+data.userAnswer).addClass('incorrect');
           };
           $("button").removeClass('A B C D');
           $("#questions").append('<div>That was a grade '+data.oldGrade+' question from '+data.oldYear+'.You could <a href="/do/'+data.oldID+'">discuss it</a>.</div>');
