@@ -43,6 +43,10 @@ div.buttons {
 	padding-bottom: 10px;
 }
 
+div#disqus_thread {
+	padding-top: 10px;
+}
+
 div#theM {
 	position: absolute;
 	left: 96px;

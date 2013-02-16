@@ -5,6 +5,10 @@ html(lang = 'en')
     link(rel = 'stylesheet', type = 'text/css', href='/style.css')
     script(src = 'http://code.jquery.com/jquery-1.9.1.min.js')
   body
+    header
+      <img src="http://www.clker.com/cliparts/8/f/2/0/1237915437814796939papapishu_Castanets.svg.med.png" height='180px' />
+      #theM M
+      #welcome This is MCASta.net!
     #questions
       .question
         img(src='http://i.imgur.com/#{imgur}.png')
@@ -13,7 +17,8 @@ html(lang = 'en')
         button.B(value = 'B') ○ B
         button.C(value = 'C') ○ C
         button.D(value = 'D') ○ D
-    #footer
+    #disqus_thread
+    footer
       p Question courtesy of the Massachusetts Department of Elementary and Secondary Education
 
     script
@@ -26,13 +31,12 @@ html(lang = 'en')
             $('button.'+data.userAnswer).addClass('incorrect');
           };
           $("button").removeClass('A B C D');
-          $("#questions").append('<div>That was a grade '+data.oldGrade+' question from '+data.oldYear+'.</div>');
+          $("#questions").append('<div class="summary">That was a grade '+data.oldGrade+' question from '+data.oldYear+'.</div>');
         });
       }
       $("button").click(answerQuestion);
 
 
-    #disqus_thread
     script(type = 'text/javascript')
       var disqus_shortname = 'mcastanet';
       (function() {
