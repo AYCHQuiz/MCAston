@@ -22,11 +22,11 @@ html(lang = 'en')
         $("button").attr('disabled', true);
         $.post("/", {answer: this.value, imgur: localImgur}, function(data){
           localImgur = data.nextImgur;
-          $('button.'+data.correctAnswer).css('background', "green");
+          $('button.'+data.correctAnswer).css('color', "green");
           if (data.correctAnswer != data.userAnswer){
             $('button.'+data.userAnswer).css('color', "red");
           };
-          $("button").removeClass();
+          $("button").removeClass('A B C D');
           $("#questions").append('<div>That was a grade '+data.oldGrade+' question from '+data.oldYear+'.You could <a href="/do/'+data.oldID+'">discuss it</a>.</div>');
           $("#questions").append('<center><table><tr><td></td><td>Grade 3</td><td>Grade 4</td><td>Grade 5</td><td>Grade 6</td><td>Grade 7</td><td>Grade 8</td><td>Grade 10</td></tr><tr><td>correct</td><td>'+data.corrects[3]+'</td><td>'+data.corrects[4]+'</td><td>'+data.corrects[5]+'</td><td>'+data.corrects[6]+'</td><td>'+data.corrects[7]+'</td><td>'+data.corrects[8]+'</td><td>'+data.corrects[10]+'</td></tr><tr><td>attempts</td><td>'+data.attempts[3]+'</td><td>'+data.attempts[4]+'</td><td>'+data.attempts[5]+'</td><td>'+data.attempts[6]+'</td><td>'+data.attempts[7]+'</td><td>'+data.attempts[8]+'</td><td>'+data.attempts[10]+'</td></tr></table></center><hr />');
 
