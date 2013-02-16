@@ -20,6 +20,7 @@ html(lang = 'en')
       function answerQuestion(){
         $("button").attr('disabled', true);
         $.post("/", {answer: this.value, imgur: '#{imgur}'}, function(data){
+          $('button.'+data.userAnswer).html('● '+data.userAnswer);
           $('button.'+data.correctAnswer).addClass('correct');
           if (data.correctAnswer != data.userAnswer){
             $('button.'+data.userAnswer).addClass('incorrect');
