@@ -39,6 +39,10 @@ footer {
 	text-align: center;
 }
 
+div.buttons {
+	padding-bottom: 10px;
+}
+
 div#theM {
 	position: absolute;
 	left: 96px;
@@ -54,6 +58,39 @@ div#welcome {
   color: #335622;
 	text-shadow: 1px 1px 1px #47B224;
 	font-size: 20px;
+}
+
+td {
+	padding-left: 1em;
+	text-align: center;
+}
+
+p {
+	padding-bottom: 1em;
+}
+
+a {
+	text-decoration: none;
+  color: #335622;
+	text-shadow: 1px 1px 1px #47B224;
+}
+
+a:link {
+	font-style: italic;
+}
+
+a:visited {
+	font-style: italic;
+}
+
+a:hover {
+	position: relative;
+	top: -1px;
+}
+
+a:active {
+  position: relative;
+  top: 0px;
 }
 
 button {
