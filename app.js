@@ -75,11 +75,19 @@ app.post('/', function(request, response){
     userAnswer = request.body.answer;
     oldQuestion = docs[0];
     console.log(request.session);
-    db.answers.insert({when: new Date(), imgur: oldQuestion.imgur,
-                       scored: scoreIt, answer: userAnswer,
-                       sessionid: request.sessionID});
     correctAnswer = oldQuestion.answer;
     oldGrade = oldQuestion.grade;
+    db.answers.insert({when: new Date(),
+                       imgur: oldQuestion.imgur,
+                       scored: scoreIt,
+                       answer: userAnswer,
+                       correctAnswer: correctAnswer,
+                       correct: correctAnswer == userAnswer,
+                       season: oldQuestion.season,
+                       grade: oldQuestion.grade,
+                       year: oldQuestion.year,
+                       id: oldQuestion.id,
+                       sessionid: request.sessionID});
     request.session.attempts[oldGrade]+=1;
     if (scoreIt && userAnswer == correctAnswer){
       request.session.corrects[oldGrade]+=1;
