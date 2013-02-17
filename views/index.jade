@@ -25,9 +25,9 @@ html(lang = 'en')
       var localImgur = '#{imgur}';
       function answerQuestion(){
         $("button").attr('disabled', true);
+        $('button.'+this.value).html('● '+this.value);
         $.post("/", {answer: this.value, imgur: localImgur}, function(data){
           localImgur = data.nextImgur;
-          $('button.'+data.userAnswer).html('● '+data.userAnswer);
           $('button.'+data.correctAnswer).addClass('correct');
           if (data.correctAnswer != data.userAnswer){
             $('button.'+data.userAnswer).addClass('incorrect');
