@@ -26,6 +26,9 @@ function do404(request, response, next){
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
 
 app.get('/', function(request, response){
+  response.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  response.setHeader('Pragma', 'no-cache');
+  response.setHeader('Expires', '0');
   if (!request.session.attempts){
     request.session.attempts = [0,0,0,0,0,0,0,0,0,0,0];
     request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
