@@ -90,12 +90,12 @@ a:visited {
 
 a:hover {
 	position: relative;
-	top: -1px;
+	top: 1px;
 }
 
 a:active {
   position: relative;
-  top: 0px;
+  top: 2px;
 }
 
 button {
