@@ -87,7 +87,9 @@ app.post('/', function(request, response){
                        year: oldQuestion.year,
                        id: oldQuestion.id,
                        sessionid: request.sessionID});
-    request.session.attempts[oldGrade]+=1;
+    if (scoreIt) {
+      request.session.attempts[oldGrade]+=1;      
+    }
     if (scoreIt && userAnswer == correctAnswer){
       request.session.corrects[oldGrade]+=1;
     };
