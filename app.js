@@ -91,13 +91,18 @@ app.post('/', function(request, response){
                        id: oldQuestion.id,
                        sessionid: request.sessionID});
     if (scoreIt) {
-      request.session.attempts[oldGrade]+=1;      
-    }
-    if (scoreIt && userAnswer == correctAnswer){
-      request.session.corrects[oldGrade]+=1;
+      request.session.attempts[oldGrade]+=1;
+      if (userAnswer == correctAnswer) {
+        request.session.corrects[oldGrade]+=1;
+      };
     };
     oldYear = oldQuestion.year;
     oldID = oldQuestion.id;
+    totalCorrect = eval(request.session.corrects.join('+'));
+    totalAttempts = eval(request.session.attempts.join('+'));
+    totalWrong = totalAttempts - totalCorrect;
+    score = totalCorrect - totalWrong;
+    accuracy = Math.round(100*totalCorrect/totalAttempts);
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
@@ -113,7 +118,12 @@ app.post('/', function(request, response){
                      oldYear: oldYear,
                      oldID: oldID,
                      attempts: request.session.attempts,
-                     corrects: request.session.corrects});
+                     corrects: request.session.corrects,
+                     score: score,
+                     accuracy: accuracy,
+                     totalCorrect: totalCorrect,
+                     totalAttempts: totalAttempts,
+                     totalWrong: totalWrong});
     });
   });
 });

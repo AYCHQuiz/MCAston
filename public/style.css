@@ -64,14 +64,22 @@ div#welcome {
 	font-size: 20px;
 }
 
+abbr {
+	font-style: italic;
+}
+
 td {
 	padding-left: 1em;
 	text-align: center;
+	font-size: 14px;
 }
 
-p {
-	padding-bottom: 1em;
+div#welcome p {
 	padding-right: 2em;
+}
+
+table {
+	padding: 1em;
 }
 
 a {
