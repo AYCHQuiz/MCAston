@@ -106,7 +106,7 @@ app.post('/', function(request, response){
     totalCorrect = eval(request.session.corrects.join('+'));
     totalAttempts = eval(request.session.attempts.join('+'));
     totalWrong = totalAttempts - totalCorrect;
-    score = totalCorrect - totalWrong;
+    score = Math.round(100*(totalCorrect - totalWrong/3))/100;
     accuracy = Math.round(100*totalCorrect/totalAttempts);
     n = Math.floor(Math.random()*1236);
     db.mcas.find().skip(n).limit(1, function(err, docs){
