@@ -34,7 +34,9 @@ app.get('/', function(request, response){
     request.session.corrects = [0,0,0,0,0,0,0,0,0,0,0];
   };
   if (request.session.imgur){
-    db.displays.insert({when: new Date(), imgur: request.session.imgur,
+    request.session.lastLoaded = new Date();
+    db.displays.insert({when: request.session.lastLoaded,
+                        imgur: request.session.imgur,
                         scored: true, sessionid: request.sessionID});
     response.render('index', {imgur: request.session.imgur});
   } else {
@@ -42,7 +44,9 @@ app.get('/', function(request, response){
     db.mcas.find().skip(n).limit(1, function(err, docs){
       var imgur = docs[0].imgur;
       request.session.imgur = imgur;
-      db.displays.insert({when: new Date(), imgur: imgur, scored: true,
+      request.session.lastLoaded = new Date();
+      db.displays.insert({when: request.session.lastLoaded,
+                          imgur: imgur, scored: true,
                           sessionid: request.sessionID});
       response.render('index', {imgur: imgur});
     });
@@ -82,6 +86,7 @@ app.post('/', function(request, response){
     db.answers.insert({when: new Date(),
                        imgur: oldQuestion.imgur,
                        scored: scoreIt,
+                       lastLoaded: request.session.lastLoaded,
                        answer: userAnswer,
                        correctAnswer: correctAnswer,
                        correct: correctAnswer == userAnswer,
