@@ -20,7 +20,7 @@ app.configure(function(){
 
 function do404(request, response, next){
   response.status(404);
-  response.send('What is the sound of one hand clapping?');
+  response.send('What is the sound of one hand clapping??');
 }
 
 var db = require('mongojs').connect(app.get('secret'), app.get('collections'));
